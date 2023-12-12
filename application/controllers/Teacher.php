@@ -61,6 +61,8 @@ class Teacher extends CI_Controller {
 		session_destroy();
 		redirect(base_url());
      }
+
+      
     public function dashboard()
 	{
         $id=$_SESSION['MUserId'];
@@ -85,7 +87,25 @@ class Teacher extends CI_Controller {
         $this->load->view('erp/teacher/index',$data);
         $this->load->view('erp/teacher/footer');
     }
-
+    public function profile($action=null,$p1=null,$p2=null,$p3=null)
+    {
+        switch ($action) {
+            case null:
+        $id=$_SESSION['MUserId'];
+        $data['roles'] = $this->erp_model->view_role($id);  
+        $data['title']             = 'My Profile';
+        $data['tb_url']            = current_url().'/tb';
+        $data['search']            = $this->input->post('search');
+        $this->load->view('erp/teacher/header',$data);
+        $this->load->view('erp/teacher/my_profile',$data);
+        $this->load->view('erp/teacher/footer');
+        break;
+     
+            default:
+        # code...
+        break;
+        }
+    } 
 
     public function my_notice($action=null,$p1=null,$p2=null,$p3=null)
     {

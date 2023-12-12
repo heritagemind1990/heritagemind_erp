@@ -73,6 +73,7 @@ $route['teacher-login']			= 'teacher/teacher_login/teacher';
 $route['teacher-logout'] = 'teacher/logout';
 $route['teacher-data'] = 'teacher/teacher_dash';
 $route['teacher-profile'] = 'teacher/profile';
+$route['teacher-profile/(:any)'] = 'teacher/profile/$1';
 $route['teacher-profile-img'] = 'teacher/edit_profile';
 $route['teacher-change-password'] = 'teacher/update_password';
 
