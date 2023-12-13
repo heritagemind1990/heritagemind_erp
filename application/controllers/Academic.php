@@ -27,6 +27,196 @@ class Academic extends Inst {
         $this->load->view('erp/academic/index',$data);
         $this->load->view('erp/academic/footer');
     }
+    public function profile($action=null,$p1=null,$p2=null,$p3=null)
+    {
+        switch ($action) {
+            case null:
+        $id=$_SESSION['MUserId'];
+        $data['roles'] = $this->erp_model->view_role($id);  
+        $data['title']             = 'My Profile';
+        $data['tb_url']            = current_url().'/tb';
+        $data['search']            = $this->input->post('search');
+        $this->load->view('erp/academic/header',$data);
+        $this->load->view('erp/academic/my_profile',$data);
+        $this->load->view('erp/academic/footer');
+        break;
+        case 'edit-image':
+            $return['res'] = 'error';
+            $return['msg'] = 'Not Saved!';
+    
+            if ($this->input->server('REQUEST_METHOD')=='POST') { 
+            $id=$_SESSION['MUserId'];
+            $config['file_name'] = rand(10000, 10000000000);    
+            $config['upload_path'] = UPLOAD_PATH.'teacher/';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|webp';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+     
+            if (!empty($_FILES['file']['name'])) {
+     
+              //upload doc
+              $_FILES['files']['name'] = $_FILES['file']['name'];
+              $_FILES['files']['type'] = $_FILES['file']['type'];
+              $_FILES['files']['tmp_name'] = $_FILES['file']['tmp_name'];
+              $_FILES['files']['size'] = $_FILES['file']['size'];
+              $_FILES['files']['error'] = $_FILES['file']['error'];
+     
+              if ($this->upload->do_upload('files')) {
+                  $image_data = $this->upload->data();
+               
+                  $fileName = "teacher/" . $image_data['file_name'];
+              }
+             $file=$data['file'] = $fileName;
+              } else {
+             $file = $data['file'] = "";
+             }
+            $data = array(
+                'self_pic'       =>$file,
+             );
+             if ($this->teacher_model->Update('teacher_master',$data,['id'=>$p1])) {
+            $return['res'] = 'success';
+             $return['msg'] = 'Saved.';
+             }
+           }
+           echo json_encode($return);
+            break;
+        case 'edit-details':
+            $return['res'] = 'error';
+            $return['msg'] = 'Not Saved!';
+    
+            if ($this->input->server('REQUEST_METHOD')=='POST') { 
+            $id=$_SESSION['MUserId'];
+            $rs = $this->teacher_model->getDataID('teacher_master',$_SESSION['MUserId']);
+            $config['file_name'] = rand(10000, 10000000000);    
+            $config['upload_path'] = UPLOAD_PATH.'teacher/';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|webp';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+           
+            if (!empty($_FILES['adharfile']['name'])) {
+              $_FILES['adharfiles']['name'] = $_FILES['adharfile']['name'];
+              $_FILES['adharfiles']['type'] = $_FILES['adharfile']['type'];
+              $_FILES['adharfiles']['tmp_name'] = $_FILES['adharfile']['tmp_name'];
+              $_FILES['adharfiles']['size'] = $_FILES['adharfile']['size'];
+              $_FILES['adharfiles']['error'] = $_FILES['adharfile']['error'];
+     
+              if ($this->upload->do_upload('adharfiles')) {
+                  $image_data = $this->upload->data();
+               
+                  $fileName = "teacher/" . $image_data['file_name'];
+              }
+             $aadhaar_file_front=$data['adharfile'] = $fileName;
+              } else {
+             $aadhaar_file_front = $rs->adharfile;
+             }
+
+             if (!empty($_FILES['adhaarfile_back']['name'])) {
+                $_FILES['adhaarfile_backs']['name'] = $_FILES['adhaarfile_back']['name'];
+                $_FILES['adhaarfile_backs']['type'] = $_FILES['adhaarfile_back']['type'];
+                $_FILES['adhaarfile_backs']['tmp_name'] = $_FILES['adhaarfile_back']['tmp_name'];
+                $_FILES['adhaarfile_backs']['size'] = $_FILES['adhaarfile_back']['size'];
+                $_FILES['adhaarfile_backs']['error'] = $_FILES['adhaarfile_back']['error'];
+       
+                if ($this->upload->do_upload('adhaarfile_backs')) {
+                    $image_data = $this->upload->data();
+                 
+                    $fileName = "teacher/" . $image_data['file_name'];
+                }
+               $aadhaar_file_back=$data['adhaarfile_back'] = $fileName;
+                } else {
+               $aadhaar_file_back = $rs->adhaarfile_back;
+               }
+
+               if (!empty($_FILES['panfile']['name'])) {
+                $_FILES['panfiles']['name'] = $_FILES['panfile']['name'];
+                $_FILES['panfiles']['type'] = $_FILES['panfile']['type'];
+                $_FILES['panfiles']['tmp_name'] = $_FILES['panfile']['tmp_name'];
+                $_FILES['panfiles']['size'] = $_FILES['panfile']['size'];
+                $_FILES['panfiles']['error'] = $_FILES['panfile']['error'];
+       
+                if ($this->upload->do_upload('panfiles')) {
+                    $image_data = $this->upload->data();
+                 
+                    $fileName = "teacher/" . $image_data['file_name'];
+                }
+               $pan_file=$data['panfile'] = $fileName;
+                } else {
+               $pan_file = $rs->panfile;
+               }
+
+               if (!empty($_FILES['bank_passbook']['name'])) {
+                $_FILES['bank_passbooks']['name'] = $_FILES['bank_passbook']['name'];
+                $_FILES['bank_passbooks']['type'] = $_FILES['bank_passbook']['type'];
+                $_FILES['bank_passbooks']['tmp_name'] = $_FILES['bank_passbook']['tmp_name'];
+                $_FILES['bank_passbooks']['size'] = $_FILES['bank_passbook']['size'];
+                $_FILES['bank_passbooks']['error'] = $_FILES['bank_passbook']['error'];
+       
+                if ($this->upload->do_upload('bank_passbooks')) {
+                    $image_data = $this->upload->data();
+                 
+                    $fileName = "teacher/" . $image_data['file_name'];
+                }
+               $bank_file=$data['bank_passbook'] = $fileName;
+                } else {
+               $bank_file =$rs->bank_passbook;
+               }
+
+            $data = array(
+                'username'     => $this->input->post('username'),
+                'email'     => $this->input->post('email'),
+                'name'     => $this->input->post('name'),
+                'father_name'     => $this->input->post('father_name'),
+                'phone'     => $this->input->post('phone'),
+                'joindate'     =>$this->input->post('joindate'),
+                'teaching_qualification' =>$this->input->post('teaching_qualification'),
+                'address'       =>$this->input->post('address'),
+                'adhaar'       =>$this->input->post('adhaar'),
+                'pan'       =>$this->input->post('pan'),
+                'account_holder_name'       =>$this->input->post('account_holder_name'),
+                'account_number'       =>$this->input->post('account_number'),
+                'bank'       =>$this->input->post('bank'),
+                'ifsc'       =>$this->input->post('ifsc'),
+                'adharfile'       =>$aadhaar_file_front,
+                'adhaarfile_back'       =>$aadhaar_file_back,
+                'panfile'       =>$pan_file,
+                'bank_passbook'       =>$bank_file,
+             );
+             if ($this->teacher_model->Update('teacher_master',$data,['id'=>$p1])) {
+            $return['res'] = 'success';
+             $return['msg'] = 'Saved.';
+             }
+           }
+           echo json_encode($return);
+        break; 
+        case 'change-password':
+            $return['res'] = 'error';
+            $return['msg'] = 'Not Saved!';
+    
+            if ($this->input->server('REQUEST_METHOD')=='POST') { 
+            $id=$_SESSION['MUserId'];
+         
+            if($this->input->post('password')==$this->input->post('cpassword')){
+                $data = array(
+                    'password'     => $this->input->post('password'),
+                 );
+             if ($this->teacher_model->Update('teacher_master',$data,['id'=>$p1])) {
+            $return['res'] = 'success';
+             $return['msg'] = 'Update.';
+             }
+            }else
+            {
+                $return['res'] = 'error';
+                $return['msg'] = 'Sorry! Password & Confirm Password does not match.';
+            }
+           }
+           echo json_encode($return);
+        break;    
+     
+            default:
+        # code...
+        break;
+        }
+    } 
     public function academic_notice($action=null,$p1=null,$p2=null,$p3=null)
     {
         switch ($action) {

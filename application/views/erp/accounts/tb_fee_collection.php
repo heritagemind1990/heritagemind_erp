@@ -16,7 +16,7 @@
              <th style="border:2px solid black;">ENROLLMENT NUMBER : </th>
             <th style="border:2px solid black;"><?=$student->stu_id ?? '';?></th>
             <input type="hidden" name="enrollment" value="<?=$student->stu_id ?? '';?>">
-            <input type="hidden" name="student_id" id="" value="<?=$student->id;?>">
+            <input type="hidden" name="student_id" id="" value="<?=@$student->id;?>">
         </tr>
         <tr>    
             <th style="border:2px solid black;">SR.NO. : </th>
@@ -116,7 +116,7 @@
         $TFee=0;
         $Qtr=0;
         $Monthname='';
-        $rs2 = $this->accounts_model->get_fee($student->class_id,$student->sec_id,$month1,$month2,$month3,$month4,$month5,$month6,$month7,$month8,$month9,$month10,$month11,$month12,$scheme);
+        $rs2 = $this->accounts_model->get_fee(@$student->class_id,@$student->sec_id,$month1,$month2,$month3,$month4,$month5,$month6,$month7,$month8,$month9,$month10,$month11,$month12,$scheme);
         foreach ( $rs2 as $r2)
 		{
 		  $TFee=$TFee+$r2->amount;

@@ -92,7 +92,8 @@ $route['class-teacher'] = 'class_teacher';
 $route['class-teacher-logout'] = 'class_teacher/logout';
 $route['class-teacher-data'] = 'class_teacher/dashboard';
 $route['class-teacher-profile'] = 'class_teacher/profile';
-$route['class-teacher-profile-img'] = 'class_teacher/edit_profile';
+$route['class-teacher-profile/(:any)'] = 'class_teacher/profile/$1';
+$route['class-teacher-profile/(:any)/(:any)'] = 'class_teacher/profile/$1/$2';
 $route['class-teacher-change-password'] = 'class_teacher/change_password';
 
 //Accounts route
@@ -100,7 +101,8 @@ $route['accounts'] = 'accounts';
 $route['accounts-logout'] = 'accounts/logout';
 $route['accounts-data'] = 'accounts/dashboard';
 $route['accounts-profile'] = 'accounts/profile';
-$route['accounts-profile-img'] = 'accounts/edit_profile';
+$route['accounts-profile/(:any)'] = 'accounts/profile/$1';
+$route['accounts-profile/(:any)/(:any)'] = 'accounts/profile/$1/$2';
 $route['accounts-change-password'] = 'accounts/change_password';
 
 //transport-data Route
@@ -108,7 +110,8 @@ $route['transport'] = 'transport';
 $route['accounts-logout'] = 'transport/logout';
 $route['transport-data'] = 'transport/dashboard';
 $route['transport-profile'] = 'transport/profile';
-$route['transport-profile-img'] = 'transport/edit_profile';
+$route['transport-profile/(:any)'] = 'transport/profile/$1';
+$route['transport-profile/(:any)/(:any)'] = 'transport/profile/$1/$2';
 $route['transport-change-password'] = 'transport/change_password';
 
 //section-head-data Route
@@ -116,7 +119,8 @@ $route['section-head'] = 'section_head';
 $route['section-head-logout'] = 'section_head/logout';
 $route['section-head-data'] = 'section_head/dashboard';
 $route['section-head-profile'] = 'section_head/profile';
-$route['section-head-profile-img'] = 'section_head/edit_profile';
+$route['section-head-profile/(:any)'] = 'section_head/profile/$1';
+$route['section-head-profile/(:any)/(:any)'] = 'section_head/profile/$1/$2';
 $route['section-head-change-password'] = 'section_head/change_password';
 
 //library-data Route
@@ -124,7 +128,8 @@ $route['library'] = 'library';
 $route['library-logout'] = 'library/logout';
 $route['library-data'] = 'library/dashboard';
 $route['library-profile'] = 'library/profile';
-$route['library-profile-img'] = 'library/edit_profile';
+$route['library-profile/(:any)'] = 'library/profile/$1';
+$route['library-profile/(:any)/(:any)'] = 'library/profile/$1/$2';
 $route['library-change-password'] = 'library/change_password';
 
 // Start:: Profile
@@ -142,6 +147,9 @@ $route['change_status1']        = 'teacher/change_status';
 
 // Academc dashboard
 $route['academic-data'] = 'academic/index';
+$route['academic-profile'] = 'academic/profile';
+$route['academic-profile/(:any)'] = 'academic/profile/$1';
+$route['academic-profile/(:any)/(:any)'] = 'academic/profile/$1/$2';
 
 // Academic Notice Master
 $route['academic-notice'] = 'academic/academic_notice';
@@ -207,7 +215,9 @@ $route['category_remote/(:any)/(:any)/(:any)'] = 'academic/category_remote/$1/$2
 
 // Academc dashboard
 $route['admission-data'] = 'admission/index';
-
+$route['admission-profile'] = 'admission/profile';
+$route['admission-profile/(:any)'] = 'admission/profile/$1';
+$route['admission-profile/(:any)/(:any)'] = 'admission/profile/$1/$2';
 // Admission System
 $route['admission-system'] = 'admission/admission_system';
 $route['admission-system/(:num)'] = 'admission/admission_system/$1';
@@ -313,6 +323,9 @@ $route['left-student/(:any)/(:any)'] = 'admission/left_student/$1/$2';
 
 // Hrm dashboard
 $route['hrm-data'] = 'hrm/index';
+$route['hrm-profile'] = 'hrm/profile';
+$route['hrm-profile/(:any)'] = 'hrm/profile/$1';
+$route['hrm-profile/(:any)/(:any)'] = 'hrm/profile/$1/$2';
 // teacher information
 $route['teacher-information'] = 'hrm/teacher_info';
 $route['teacher-information/(:any)'] = 'hrm/teacher_info/$1';
@@ -348,6 +361,9 @@ $route['role-assign-master/(:any)/(:any)'] = 'hrm/role_assign_master/$1/$2';
 
 // Principal dashboard
 $route['principal-data'] = 'principal/index';
+$route['principal-profile'] = 'principal/profile';
+$route['principal-profile/(:any)'] = 'principal/profile/$1';
+$route['principal-profile/(:any)/(:any)'] = 'principal/profile/$1/$2';
 // Subject Teacher Mapping
 $route['subject-teacher-mapping'] = 'principal/sub_tea_mapping';
 $route['subject-teacher-mapping/(:any)'] = 'principal/sub_tea_mapping/$1';

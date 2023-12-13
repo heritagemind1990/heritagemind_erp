@@ -122,7 +122,7 @@ if($this->session->MName=='' || $this->session->MLogin==false)
             <!-- Message End -->
           </a>
           <div class="dropdown-divider"></div>
-          <a href="<?=base_url();?>admin-profile" class="dropdown-item">
+          <a href="<?=base_url();?>class-teacher-profile" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
               <div class="media-body">
