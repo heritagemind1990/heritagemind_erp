@@ -871,7 +871,7 @@ public function student_attendance_register($action=null,$p1=null,$p2=null,$p3=n
             }
             else{ 
             $data['section'] = $section = '0';
-        $data['Attmonth'] = $Attmonth = '';
+        $data['Attmonth'] = $Attmonth = date('m');
             }
     $data['student']         = $this->class_teacher_model->attendance_student($section);        
     $this->load->view('erp/class_teacher/header',$data);
@@ -885,7 +885,7 @@ public function student_attendance_register($action=null,$p1=null,$p2=null,$p3=n
        }
        else{ 
          $data['section'] = $section = '0';
-        $data['Attmonth'] = $Attmonth = '';
+        $data['Attmonth'] = $Attmonth = date('m');
             }
         $tea_id=$id=$_SESSION['MUserId'];
         $data['rows']           = $this->class_teacher_model->view_attendance($section,$Attmonth);

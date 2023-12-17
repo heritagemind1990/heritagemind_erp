@@ -1919,7 +1919,7 @@ class Admission extends Inst {
               }
               else{ 
               $data['section'] = $section = '0';
-          $data['Attmonth'] = $Attmonth = '';
+          $data['Attmonth'] = $Attmonth = date('m');
               }
       $data['student']         = $this->admission_model->attendance_student($section);        
       $this->load->view('erp/admission/header',$data);
@@ -1933,7 +1933,7 @@ class Admission extends Inst {
          }
          else{ 
            $data['section'] = $section = '0';
-          $data['Attmonth'] = $Attmonth = '';
+          $data['Attmonth'] = $Attmonth = date('m');
               }
           $tea_id=$id=$_SESSION['MUserId'];
           $data['rows']           = $this->admission_model->view_attendance($section,$Attmonth);

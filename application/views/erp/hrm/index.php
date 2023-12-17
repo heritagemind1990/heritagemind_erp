@@ -106,6 +106,23 @@
             </a>
             <!-- /.info-box -->
           </div>
+          
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+          <a href="<?=base_url();?>staff-attendance-register">
+            <div class="info-box">
+              <span class="info-box-icon bg-primary"><i class="fa-solid fa-calendar-days"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text text-bold">Staff Attendance Register</span>
+                <span class="info-box-text subheading">Total Present  :- <?=$total_role;?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            </a>
+            <!-- /.info-box -->
+          </div>
+          
         </div>
       </div><!-- /.container-fluid -->
 

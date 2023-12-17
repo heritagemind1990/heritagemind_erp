@@ -261,6 +261,14 @@ if($this->session->MName=='' || $this->session->MLogin==false)
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?=base_url();?>staff-attendance-register" class="nav-link">
+            <i class="fa-solid fa-calendar-days"></i>
+              <p>
+                Staff Attendance Register
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -268,5 +268,38 @@ $interval = $datetime1->diff($datetime2);
 return $interval->format('%H : %i : %s ');
     
 }
+function late_time($start_time,$end_time) {
+// Convert start and end times to DateTime objects
+$start_datetime = new DateTime($start_time);
+$end_datetime = new DateTime($end_time);
+// Calculate the difference between start and end times
+$time_difference = $start_datetime->diff($end_datetime);
+// Output the difference
+// Compare start and end times
+if ($start_datetime < $end_datetime) {
+    $r =  'Late';
+    return "<button class='btn btn-danger'>".$time_difference->format('%H:%I:%S')." Hours ".$r."</button>";
+} else {
+    $r= 'Early';
+    return "<button class='btn btn-success'>".$time_difference->format('%H:%I:%S')." Hours ".$r."</button>";
+}
+}
+function over_time($start_time,$end_time) {
+    // Convert start and end times to DateTime objects
+    $start_datetime = new DateTime($start_time);
+    $end_datetime = new DateTime($end_time);
+    // Calculate the difference between start and end times
+    $time_difference = $start_datetime->diff($end_datetime);
+    // Output the difference
+    // Compare start and end times
+    if ($start_datetime > $end_datetime) {
+        $r =  'Early';
+        return "<button class='btn btn-danger'>".$time_difference->format('%H:%I:%S')." Hours ".$r."</button>";
+    } else {
+        $r= 'Over Time';
+        return "<button class='btn btn-success'>".$time_difference->format('%H:%I:%S')." Hours ".$r."</button>";
+}
+   
+} 
 
 ?>

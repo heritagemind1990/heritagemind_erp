@@ -292,6 +292,17 @@ public function attendance_master($search,$limit=null,$start=null)
     return $this->db->get()->result();
 
 }
+public function getTeacherDayAtt($role,$date)
+{
+     $this->db->select("a.*,b.punch_in,b.punch_out,b.punch_date,c.role_name,d.start_time,d.end_time");
+     $this->db->from('teacher_master a');
+     $this->db->join('staff_attendance b','b.tea_id=a.id','left');
+     $this->db->join('role_master c','c.id=a.role_id','left');
+     $this->db->join('attendance_master d','d.role_id=a.role_id','left');
+     $this->db->where(['a.is_deleted'=>'NOT_DELETED','a.status'=>'1','a.role_id'=>$role]);
+     $this->db->order_by('a.name','ASC');
+     return $this->db->get()->result();
+} 
 
 
 }

@@ -808,3 +808,8 @@ $route['submit_attendance'] = 'teacher/submit_attendance';
 $route['working-hour-master'] = 'hrm/working_hour_master';
 $route['working-hour-master/(:any)'] = 'hrm/working_hour_master/$1';
 $route['working-hour-master/(:any)/(:any)'] = 'hrm/working_hour_master/$1/$2';
+
+//staff-attendance-register
+$route['staff-attendance-register'] = 'hrm/staff_attendance_register';
+$route['staff-attendance-register/(:any)'] = 'hrm/staff_attendance_register/$1';
+$route['staff-attendance-register/(:any)/(:any)'] = 'hrm/staff_attendance_register/$1/$2';

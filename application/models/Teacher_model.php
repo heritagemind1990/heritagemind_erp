@@ -525,8 +525,15 @@ public function get_att_today($tea)
     ->get();
     return $query->row();
 }
-
-
+public function getAttMaster($school)
+{
+    $query = $this->db
+    ->select('t1.*')   
+    ->from('attendance_master t1')    
+    ->where(['t1.is_deleted' => 'NOT_DELETED','t1.role_id'=>'5','t1.status'=>'1','t1.school_id'=>$school])
+    ->get();
+    return $query->row();
+}
 
 
 

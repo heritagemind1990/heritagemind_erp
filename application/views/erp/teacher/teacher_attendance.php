@@ -70,7 +70,7 @@
       <td style="border: 2px solid black;"><?=@_time($rs->punch_in);?></td>
       <td style="border: 2px solid black;"><?=@_time($rs->punch_out);?></td>
       <td style="border: 2px solid black;"><?=@_date($rs->punch_date);?></td>
-      <td style="border: 2px solid black;"><?=@time_diff($rs->punch_in,$rs->punch_out);?></td>
+      <td style="border: 2px solid black;"><?php if($rs->punch_in !='' && $rs->punch_out !=''){ echo time_diff($rs->punch_in,$rs->punch_out) ;}else{ echo "00:00:00";};?></td>
     </tr>
   </tbody>
   </table>

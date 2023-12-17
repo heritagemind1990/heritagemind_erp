@@ -4,6 +4,7 @@ $(document).ready(function() {
         rules: {
             email:"required",
             joindata:"required",
+            role:"required",
             name:{
                 required:true,
             }
@@ -12,6 +13,7 @@ $(document).ready(function() {
         messages: {
             joindata:"Please Enter Join Date",
             email:"Please Enter Email",
+            role:"Please select role",
             name: {
                 required : "Please enter name.",
             }
@@ -77,6 +79,17 @@ $(document).ready(function() {
             <div class="form-group">
                 <label for="recipient-name" class="control-label">Teachers Qualification</label>
                 <input type="text" class="form-control" name="teacherqualification" placeholder="Enter Teachers Qualification">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Select Role </label>
+                <select name="role" id="role" class="form-control">
+                    <option value="">--Select Role--</option>
+                    <?php foreach($roles as $r):?>
+                    <option value="<?=$r->id;?>" ><?=$r->role_name;?></option>
+                     <?php endforeach;?>   
+                </select>
             </div>
         </div>
             
@@ -147,7 +160,17 @@ $(document).ready(function() {
                 <input type="text" class="form-control" name="teacherqualification"  value="<?=$teacher->teaching_qualification;?>">
             </div>
         </div>
-            
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Select Role </label>
+                <select name="role" id="role" class="form-control">
+                    <option value="">--Select Role--</option>
+                    <?php foreach($roles as $r):?>
+                    <option value="<?=$r->id;?>"  <?php if($teacher->role_id==$r->id){echo "selected";} ;?>><?=$r->role_name;?></option>
+                     <?php endforeach;?>   
+                </select>
+            </div>
+        </div>  
         </div>
  
         

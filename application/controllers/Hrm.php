@@ -266,11 +266,13 @@ class Hrm extends Inst {
                 case 'teacher_create':
                     $data['action_url']         = base_url().'teacher-information/save';
                     $data['total_data']=0;
+                    $data['roles']            = $this->hrm_model->getData('role_master');
                     $page                       = 'erp/hrm/teacher_create';
                     if ($p1!=null) {
                         $data['update_url']     = base_url().'teacher-information/save/'.$p1;
                         $data['teacher']         = $this->erp_model->teacher_data_view($p1);
                         $data['total_data']         = $this->erp_model->teacher_row_count($p1);
+                        $data['roles']            = $this->hrm_model->getData('role_master');
                         $page                   = 'erp/hrm/teacher_create';
                     }
                     $data['form_id']            = uniqid();
@@ -296,6 +298,7 @@ class Hrm extends Inst {
                             'joindate'        => $this->input->post('joindata'),
                             'teaching_qualification' => $this->input->post('teacherqualification'),
                             'status'        =>1,
+                            'role_id'        => $this->input->post('role'),
                         );
                             
                         if($this->erp_model->UpdateData('teacher_master',$data,$id)){
@@ -316,6 +319,7 @@ class Hrm extends Inst {
                             'joindate'        => $this->input->post('joindata'),
                             'teaching_qualification' => $this->input->post('teacherqualification'),
                             'status'        =>1,
+                            'role_id'        => $this->input->post('role'),
                             );
                         if ($this->erp_model->Insert('teacher_master',$data)) {
                             $return['res'] = 'success';
@@ -1014,8 +1018,50 @@ class Hrm extends Inst {
         }
     }  
 
-
-
+    
+    public function staff_attendance_register($action=null,$p1=null,$p2=null,$p3=null)
+    {
+        switch ($action) {
+            case null:
+        $data['menu_id'] = $this->uri->segment(2);
+         $id=$_SESSION['MUserId'];
+         $data['roles'] = $this->erp_model->view_role($id);
+       
+        $data['title']          = 'Staff Attendance Register';
+        $data['tb_url']            = current_url().'/tb';
+        $data['search']           = $this->input->post('search');
+        $data['roles']            = $this->hrm_model->getData('role_master');
+        $this->load->view('erp/hrm/header',$data);
+        $this->load->view('erp/hrm/staff_attendance_register',$data);
+        $this->load->view('erp/hrm/footer');
+        break;
+        case 'tb':
+            if(!empty($_POST['role'])){ 
+             $data['role'] = $role = $_POST['role'];
+             $data['date'] = $date = $_POST['date'];
+            }
+            else{ 
+              $data['role'] = $role = '0';
+              $data['date'] = $date = date('Y-m-d');
+                 }
+                
+             $tea_id=$id=$_SESSION['MUserId'];
+             if($role==5)
+             {
+                $data['rows']           = $this->hrm_model->getTeacherDayAtt($role,$date);
+             }else
+             {
+                $data['rows'] =[]; 
+             }
+             
+             $page                       = 'erp/hrm/tb_staff_attendance_register';
+             $this->load->view($page, $data); 
+             break;
+            default:
+        # code...
+        break;
+        }
+    }  
 
 
 

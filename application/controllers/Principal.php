@@ -905,7 +905,7 @@ class Principal extends Inst {
               }
               else{ 
               $data['section'] = $section = '0';
-          $data['Attmonth'] = $Attmonth = '';
+          $data['Attmonth'] = $Attmonth = date('m');
               }
       $data['student']         = $this->principal_model->attendance_student($section);        
       $this->load->view('erp/principal/header',$data);
@@ -919,7 +919,7 @@ class Principal extends Inst {
          }
          else{ 
            $data['section'] = $section = '0';
-          $data['Attmonth'] = $Attmonth = '';
+          $data['Attmonth'] = $Attmonth = date('m');
               }
           $tea_id=$id=$_SESSION['MUserId'];
           $data['rows']           = $this->principal_model->view_attendance($section,$Attmonth);

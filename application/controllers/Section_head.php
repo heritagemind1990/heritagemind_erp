@@ -752,7 +752,7 @@ class Section_head extends CI_Controller {
                 }
                 else{ 
                 $data['section'] = $section = '0';
-            $data['Attmonth'] = $Attmonth = '';
+            $data['Attmonth'] = $Attmonth =date('m');
                 }
         $data['student']         = $this->section_head_model->attendance_student($section);        
         $this->load->view('erp/section_head/header',$data);
@@ -766,7 +766,7 @@ class Section_head extends CI_Controller {
            }
            else{ 
              $data['section'] = $section = '0';
-            $data['Attmonth'] = $Attmonth = '';
+            $data['Attmonth'] = $Attmonth = date('m');
                 }
             $tea_id=$id=$_SESSION['MUserId'];
             $data['rows']           = $this->section_head_model->view_attendance($section,$Attmonth);

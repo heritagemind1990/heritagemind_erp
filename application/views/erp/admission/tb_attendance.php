@@ -11,7 +11,7 @@
                     <th>Student ID</th>
                     <th>Section</th>
                     <?php 
-                    $current_Month 	= date('m');
+                    $current_Month 	=$Attmonth;
                     $year 			= date('Y');
                     $date = mktime(12, 0, 0, $current_Month, 1, $year);
                     $numberOfDays = cal_days_in_month(CAL_GREGORIAN, $current_Month, $year);

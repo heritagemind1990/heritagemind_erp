@@ -913,7 +913,7 @@ class Teacher extends CI_Controller {
                 }
                 else{ 
                 $data['section'] = $section = '0';
-            $data['Attmonth'] = $Attmonth = '';
+            $data['Attmonth'] = $Attmonth = date('m');
                 }
         $data['student']         = $this->teacher_model->attendance_student($section);        
         $this->load->view('erp/teacher/header',$data);
@@ -927,8 +927,9 @@ class Teacher extends CI_Controller {
            }
            else{ 
              $data['section'] = $section = '0';
-            $data['Attmonth'] = $Attmonth = '';
+            $data['Attmonth'] = $Attmonth = date('m');
                 }
+               
             $tea_id=$id=$_SESSION['MUserId'];
             $data['rows']           = $this->teacher_model->view_attendance($section,$Attmonth);
             $page                       = 'erp/teacher/tb_attendance';
@@ -1124,143 +1125,20 @@ class Teacher extends CI_Controller {
     public function teacher_attendance($action=null,$p1=null,$p2=null,$p3=null)
     {
         switch ($action) {
-            case null:
+        case null:
+        $school = 1;    
         $data['menu_id'] = $this->uri->segment(2);
         $id=$_SESSION['MUserId'];
-         $data['roles'] = $this->erp_model->view_role($id);
+        $data['roles'] = $this->erp_model->view_role($id);
         $data['title']          = 'My Attendance';
         $data['tb_url']            = current_url().'/tb';
         $data['search']           = $this->input->post('search');
+        $data['att']               = $this->teacher_model->getAttMaster($school);
         $this->load->view('erp/teacher/header',$data);
         $this->load->view('erp/teacher/teacher_attendance',$data);
         $this->load->view('erp/teacher/footer');
-        break;
-        case 'submit_attendance':
-
-
-        break;    
-        case 'tb':
-            $userid=$id=$_SESSION['MUserId'];
-            $this->load->library('pagination');
-            $config = array();
-            $config["base_url"]     = base_url()."teacher-student-marks-upload/tb";
-            $config["total_rows"]   = count($this->teacher_model->upload_marks_tb($userid));
-            $data['total_rows']     = $config["total_rows"];
-            $config["per_page"]     = 10;
-            $config["uri_segment"]  = 2;
-            $config['attributes']   = array('class' => 'pag-link ');
-            $this->pagination->initialize($config);
-            $data['links']          = $this->pagination->create_links();
-            $data['page']           = $page = ($p1!=null) ? $p1 : 0;
-            $data['search']         = $this->input->post('search');
-            $data['update_url']       =base_url().'teacher-student-marks-upload/update/';
-            $data['new_url']         = base_url().'teacher-student-marks-upload/create/';
-            $data['rows']           = $this->teacher_model->upload_marks_tb($userid,$config["per_page"],$page);
-            $page                       = 'erp/teacher/tb_uoload_marks';
-            $this->load->view($page, $data); 
-            break;
-    
-            case 'marks_upload':
-                 $data['menu_id'] = $this->uri->segment(2);
-                 $id=$_SESSION['MUserId'];
-                 $data['roles'] = $this->erp_model->view_role($id);
-                $data['title']          = 'Student Marks Upload';
-                $data['action_url']         = base_url().'teacher-student-marks-upload/save/'.$p1;
-                $data['map']    =$this->teacher_model->SST_MAP($p1);
-                $data['form_id']            = uniqid();
-                $data['exam']         = $this->teacher_model->getData('exam_master');
-                if(!empty($_POST['exam']))
-                {
-                    $data['exam_id'] =  $_POST['exam'];
-                }else
-                {
-                    $data['exam_id'] = '';
-                }
-               
-                 $this->load->view('erp/teacher/header',$data);
-                $this->load->view('erp/teacher/marks_upload',$data);
-                $this->load->view('erp/teacher/footer');
-            break;    
-        case 'save':
-        $return['res'] = 'error';
-        $return['msg'] = 'Not Saved!';
-    
-        if ($this->input->server('REQUEST_METHOD')=='POST') { 
-        $id=$_SESSION['MUserId'];
-        $st = $this->input->post('stu_id');
-        if( !empty($_POST['section']) && !empty($_POST['exam_id']) ){
-        $i = 0;
-        foreach($st as $s){
-        $stu_id = $s ;
-        $section = $this->input->post('section');
-        $exam_id = $this->input->post('exam_id');
-        $SSTId = $this->input->post('SSTId');
-        $sub_id =$this->input->post('sub_id');
-        $mark = $_POST['marks'][$i];
-          $count = $this->erp_model->Counter('student_marks', array( 'section_id'=> $section,'student_id' => $stu_id,'sst_id'=>$SSTId,'exam_id'=>$exam_id,'sub_id'=>$sub_id,'is_deleted'=>'NOT_DELETED','status'=>'1'));
-        if($count == 0)
-        {
-         $data= array(
-              'student_id' => $stu_id,
-              'section_id' => $section,
-               'sst_id'=> $SSTId,
-              'exam_id' => $exam_id,
-              'sub_id' => $sub_id,
-              'marks' => $mark,
-              'created_by'=>$_SESSION['MUserId'],
-            );
-           
-          $this->academic_model->Insert('student_marks', $data);
-        }else
-        {
-             $data= array(
-                'student_id' => $stu_id,
-                'section_id' => $section,
-                 'sst_id'=> $SSTId,
-                'exam_id' => $exam_id,
-                'sub_id' => $sub_id,
-                'marks' => $mark,
-                'is_locked'=>'lock',
-                'created_by'=>$_SESSION['MUserId'],
-              );
-              $this->academic_model->Update('student_marks', $data, array('student_id' => $stu_id , 'sst_id'=> $SSTId ,'exam_id' => $exam_id,'sub_id'=>$sub_id,'section_id'=> $section ));
-        }
-    
-          $i++ ;
-          }
-        $return['res'] = 'success';
-        $return['msg'] = 'Marks Added Successfully.';
-        }
-         else
-         {
-            $return['res'] = 'error';
-            $return['msg'] = 'Sorry!! Please select exam.';
-        }
-       }
-       echo json_encode($return);
         break; 
-        case 'view_marks':
-               $data['menu_id'] = $this->uri->segment(2);
-               $id=$_SESSION['MUserId'];
-               $data['roles'] = $this->erp_model->view_role($id);
-               $data['title']          = 'Student Marks Upload';
-               $data['action_url']         = base_url().'teacher-student-marks-upload/save/'.$p1;
-               $data['map']    =$this->teacher_model->SST_MAP($p1);
-               $data['form_id']            = uniqid();
-               $data['exam']         = $this->teacher_model->getData('exam_master');
-               if(!empty($_POST['exam']))
-                {
-                    $data['exam_id'] =  $_POST['exam'];
-                }else
-                {
-                    $data['exam_id'] = '';
-                }
-               
-               $this->load->view('erp/teacher/header',$data);
-               $this->load->view('erp/teacher/view_marks',$data);
-               $this->load->view('erp/teacher/footer');
-        break;  
-            default:
+        default:
         # code...
         break;
         }
@@ -1287,6 +1165,7 @@ class Teacher extends CI_Controller {
             $attdata['punch_date'] =$punch_date = date('Y-m-d');
             $attdata['att_status'] = '1';
             $attdata['created_by'] = $tea_id = $_SESSION['MUserId'];
+            $attdata['role_id'] = '5';
             if ($this->erp_model->Save('staff_attendance',$attdata)) {
                 echo json_encode(array('status' => 'success', 'message' => 'Attendance punch in successfully!'));
                  }else
