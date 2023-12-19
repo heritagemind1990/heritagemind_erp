@@ -244,10 +244,10 @@ if($this->session->MName=='' || $this->session->MLogin==false)
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?=base_url();?>category-wise-student" class="nav-link">
-            <i class="fa-solid fa-users"></i>
+            <a href="<?=base_url();?>my-marks" class="nav-link">
+            <i class="fas fa-poll-h"></i>
               <p>
-                Category Wise All Student
+               My Marks
               </p>
             </a>
           </li>

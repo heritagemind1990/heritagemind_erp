@@ -127,13 +127,13 @@
           </div>
           <!-- /.col -->
           <div class="col-md-3 col-sm-6 col-12">
-          <a href="<?=base_url();?>category-wise-student">
+          <a href="<?=base_url();?>my-marks">
             <div class="info-box">
-              <span class="info-box-icon bg-info"><i class="fa-solid fa-users"></i></span>
+              <span class="info-box-icon bg-info"><i class="fas fa-poll-h"></i></span>
 
               <div class="info-box-content">
                 <span class="info-box-text text-bold">My Marks</span>
-                <span class="info-box-text subheading">Total Student:- <?//=$total_student;?></span>
+                <span class="info-box-text subheading">Total Exam:- <?=$total_exams;?></span>
               </div>
               <!-- /.info-box-content -->
             </div>

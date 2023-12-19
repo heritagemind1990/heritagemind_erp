@@ -384,6 +384,33 @@ public function view_time_table($day,$section,$period_id)
     
      return $this->db->get()->row();
 } 
+public function getData($tb)
+{
+     $this->db->select("*");
+     $this->db->from($tb);
+     $this->db->where(['is_deleted'=>'NOT_DELETED','status'=>'1']);
+     $this->db->order_by('id','ASC');
+     return $this->db->get()->result();
+} 
+public function getDataID($tb,$id)
+{
+ 
+    $query = $this->db
+    ->select('*')
+    ->from($tb)       
+    ->where(['is_deleted' => 'NOT_DELETED','id'=>$id,'status'=>'1'])
+    ->get();
+    return $query->row();
+}
+public function getTotalExam()
+{
+     $this->db->select("t1.*");
+     $this->db->from('student_marks t1');
+     $this->db->where(['t1.is_deleted'=>'NOT_DELETED']);
+     $this->db->group_by('t1.exam_id');
+     return $this->db->get()->num_rows();
+}
+
 
 }
 ?>
