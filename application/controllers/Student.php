@@ -434,12 +434,19 @@ public function Logout()
        $this->load->view('erp/student/footer');
        break;
        case 'tb':
+           if(!empty($_POST['exam']))
+           {
+            $exam = $_POST['exam'];
+           }else
+           {
+            $exam = '1';
+           }
            $id=$_SESSION['MUserId'];
            $rs= $this->student_model->find_section($id);
            $data['section']=$rs->sec_id;
            $data['student']   =$student    = $this->student_model->getDataID('v_sec_student',$id);
            $data['sst_data'] = $this->principal_model->sst_data($student->sec_id);
-           $data['exams']           = $this->student_model->getDataID('exam_master','1');
+           $data['exams']           = $this->student_model->getDataID('exam_master',$exam);
            $data['section_name']   = $this->student_model->view_data_id('section_master',$rs->sec_id);
            $data['period']         = $this->student_model->view_period_data('section_periods');
            $page                       = 'erp/student/tb_my_marks';
@@ -453,5 +460,26 @@ public function Logout()
    }
 
    
+   public function student_transport_stoppage($action=null,$p1=null,$p2=null,$p3=null)
+   {
+       switch ($action) {
+       case null:
+       $data['menu_id'] = $this->uri->segment(2);
+       $id=$_SESSION['MUserId'];
+       $data['roles'] = $this->erp_model->view_role($id);
+       $data['title']          = 'My Transport Stoppage & Timing';
+       $data['tb_url']            = current_url().'/tb';
+       $data['search']           = $this->input->post('search');
+       $data['exam']           = $this->student_model->getStudentTransport($id);
+       $this->load->view('erp/student/header',$data);
+       $this->load->view('erp/student/student_transport_stoppage',$data);
+       $this->load->view('erp/student/footer');
+       break;
+      
+           default:
+       # code...
+       break;
+       }
+   }
 
 }   

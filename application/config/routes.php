@@ -818,3 +818,9 @@ $route['staff-attendance-register/(:any)/(:any)'] = 'hrm/staff_attendance_regist
 $route['my-marks'] = 'student/my_marks';
 $route['my-marks/(:any)'] = 'student/my_marks/$1';
 $route['my-marks/(:any)/(:any)'] = 'student/my_marks/$1/$2';
+
+
+//student-transport-stoppage
+$route['student-transport-stoppage'] = 'student/student_transport_stoppage';
+$route['student-transport-stoppage/(:any)'] = 'student/student_transport_stoppage/$1';
+$route['student-transport-stoppage/(:any)/(:any)'] = 'student/student_transport_stoppage/$1/$2';

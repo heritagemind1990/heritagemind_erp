@@ -411,6 +411,18 @@ public function getTotalExam()
      return $this->db->get()->num_rows();
 }
 
+public function getStudentTransport($student)
+{
+     $this->db->select("t2.fname,t2.lname,t2.section_name,t2.class_name,t3.start_route,t3.end_route,t4.pick_up,t4.drop_off,t4.pick_up_time,t4.stop_time");
+     $this->db->from('transport_student t1');
+     $this->db->join('v_sec_student t2','t1.student_id=t2.id','left');
+     $this->db->join('transport_route t3','t1.route_id=t3.id','left');
+     $this->db->join('transport_sub_route t4','t1.sub_route_id=t4.id','left');
+     $this->db->where(['t1.is_deleted'=>'NOT_DELETED','t1.status'=>'1','t1.student_id'=>$student,'t2.regstatus'=>'1','t2.IsLeft'=>'0']);
+    
+     return $this->db->get()->row();
+} 
+
 
 }
 ?>

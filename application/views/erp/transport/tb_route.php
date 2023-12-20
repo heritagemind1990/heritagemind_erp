@@ -5,6 +5,9 @@
                     <th>Sr No.</th>
                     <th>Start Route</th>
                     <th>End Route</th>
+                    <th>Assign Driver</th>
+                    <th>Assign Conductor</th>
+                    <th>Assign Vehicle</th>
                     <th class="text-center">Total Student</th>
                     <th class="text-center">Sub Route</th>
                     <th class="text-center">Status</th>
@@ -17,6 +20,22 @@
                     <td><?=++$i;?></td>
                     <td><?=$t->start_route;?></td>
                     <td><?=$t->end_route;?></td>
+                    <td class="text-center">
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#showModal-xl" data-whatever=" Route (<?=$t->start_route.' - '.$t->end_route;?>)" data-url="<?=$assign_tr_route_driver?><?=$t->id?>" title="Update" style="font-size: 1.6rem;font-weight: bold;">
+                    <i class="fa-solid fa-plus"></i>
+                       </a>
+                    </td>
+                    <td class="text-center">
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#showModal-xl" data-whatever=" Route (<?=$t->start_route.' - '.$t->end_route;?>)" data-url="<?=$assign_tr_route_conductor?><?=$t->id?>" title="Update" style="font-size: 1.6rem;font-weight: bold;">
+                    <i class="fa-solid fa-plus"></i>
+                       </a>
+                    </td>
+                    <td class="text-center">
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#showModal-xl" data-whatever=" Route (<?=$t->start_route.' - '.$t->end_route;?>)" data-url="<?=$assign_tr_route_vehicle?><?=$t->id?>" title="Update" style="font-size: 1.6rem;font-weight: bold;">
+                    <i class="fa-solid fa-plus"></i>
+                       </a>
+                    </td>
+                    <!--  -->
                     <?php    $count = $this->erp_model->Counter('transport_student', array('route_id'=>$t->id,'is_deleted'=>'NOT_DELETED','status'=>'1'));?>
                     <td class="text-center">
                       <a href="javascript:void(0)" data-toggle="modal" data-target="#showModal-xl" data-whatever="View All Student  (<?=$t->start_route.' - '.$t->end_route;?>)" data-url="<?=$view_student_route?><?=$t->id?>" title="Update" class="btn  btn-primary">
@@ -24,7 +43,7 @@
                        </a>
                     </td>
                     <td class="text-center">
-                      <a href="javascript:void(0)" data-toggle="modal" data-target="#showModal-xl" data-whatever="Sub Route (<?=$t->start_route.' - '.$t->end_route;?>)" data-url="<?=$view_sub_route?><?=$t->id?>" title="Update" style="font-size: 1.6rem;font-weight: bold;">
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#showModal-xl" data-whatever=" Route (<?=$t->start_route.' - '.$t->end_route;?>)" data-url="<?=$view_sub_route?><?=$t->id?>" title="Update" style="font-size: 1.6rem;font-weight: bold;">
                     <i class="fa-solid fa-plus"></i>
                        </a>
                     </td>

@@ -1,6 +1,6 @@
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper pt-4 pb-5">
+  <div class="content-wrapper pt-4 pb-5" >
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -20,7 +20,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="margin-bottom: 60rem;">
       <div class="container-fluid">
       <div class="row">
       <div class="col-12">
@@ -28,7 +28,7 @@
               <div class="card-header">
                 <div class="row">
                     <div class="col-6">
-                     <select name="exam" id="" class="form-control">
+                     <select name="exam" id="exam" class="form-control exam">
                         <option value="">--Select--</option>
                         <?php foreach($exam as $ex):?>
                         <option value="<?=$ex->id;?>"><?=$ex->title;?></option>
@@ -36,7 +36,7 @@
                      </select>
                     </div>
                     <div class="col-4">
-                        <button class="btn btn-sm btn-primary" type="button">Submit</button>
+                        <button class="btn btn-primary" onclick="fetch_result()" type="button">Submit</button>
                     </div>
                     <div class="col-2">
                     <h3 class="card-title float-right ml-2">
@@ -48,7 +48,7 @@
 
               </div>
               <!-- /.card-header -->
-              <div class="card-content collapse show" id="tb">
+              <div class="card-content collapse show show-result" id="tb"  style="display: none;">
                 </div>
               <!-- /.card-body -->
             </div>
@@ -77,5 +77,25 @@ function loadtb(url=null){
 }
 
 loadtb();
+function fetch_result()
+{
+    var exam = $('#exam').val();
+    if(exam !=''){
+$.ajax({
+    url: "<?php echo base_url('my-marks/tb'); ?>",
+    method: "POST",
+    data: {
+      exam:exam,
+    },
+    success: function(data){
+      $(".show-result").css("display","block");
+        $("#tb").html(data);
 
+    },
+});
+    }else
+    {
+      alert_toastr("error","Please select exam.");
+    }
+}
 </script>

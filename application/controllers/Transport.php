@@ -1144,6 +1144,9 @@ class Transport extends Inst {
          $data['delete_url']        =base_url().'route-allocation/delete/'; 
          $data['view_sub_route']    =base_url().'route-allocation/view-sub-route/';
          $data['view_student_route']    =base_url().'route-allocation/view-student-route/';
+         $data['assign_tr_route_driver']    =base_url().'route-allocation/assign-driver-route/';
+         $data['assign_tr_route_conductor']    =base_url().'route-allocation/assign-conductor-route/';
+         $data['assign_tr_route_vehicle']    =base_url().'route-allocation/assign-vehicle-route/';
          $data['rows']              = $this->transport_model->route_master($search,$config["per_page"],$page);
          $page                      = 'erp/transport/tb_route';
          $this->load->view($page, $data); 
@@ -1224,7 +1227,97 @@ class Transport extends Inst {
             $data['rows']               = $this->transport_model->view_student_route($p1);
             $data['form_id']            = uniqid();
             $this->load->view($page, $data);
+         break;
+         case 'assign-driver-route':
+            $page                       = 'erp/transport/assign_driver_route';
+            $data['route']               = $this->transport_model->view_data_id('transport_route',$p1);
+            $data['data']             = $this->transport_model->get_deriver_route($p1);
+            $data['driver']            =$this->transport_model->view_data('transport_drivers');
+            $data['form_id']            = uniqid();
+            $this->load->view($page, $data);
              break;
+           case 'add_assig_driver_route':
+            $return = 'Not Saved.';
+            if ($this->input->server('REQUEST_METHOD')=='POST') { 
+                $edit_id =  $this->input->post('id');
+                if ($edit_id!=null) {
+                       $data = array(
+                       'route_id'     => $this->input->post('route'),
+                       'driver_id'  => $this->input->post('driver'),
+                       'created_by' => $_SESSION['MUserId'],
+                       'status'        =>1,
+                   );  
+                   if($this->erp_model->UpdateData('assgin_tr_route_driver',$data,$edit_id)){
+                       $return = 'Updated.';
+                   }
+               }
+               else{ 
+                  
+                       $data = array(
+                        'route_id'     => $this->input->post('route'),
+                        'driver_id'  => $this->input->post('driver'),
+                           'created_by' => $_SESSION['MUserId'],
+                           'status'        =>1,
+                       );  
+                $count = $this->erp_model->Counter('assgin_tr_route_driver', array('route_id' =>$this->input->post('route') ));
+                if($count==0){
+                   if ($this->erp_model->Insert('assgin_tr_route_driver',$data)) {
+                       $return = 'Saved.';
+                       
+                   }
+                }else
+                {
+                    $return = 'Already Mapped.';
+                }
+               }
+           }
+           echo $return;
+           break; 
+           case 'assign-conductor-route':
+            $page                       = 'erp/transport/assign_donductor_route';
+            $data['route']               = $this->transport_model->view_data_id('transport_route',$p1);
+            $data['data']             = $this->transport_model->get_conductor_route($p1);
+            $data['conductor']            =$this->transport_model->view_data('transport_conductors');
+            $data['form_id']            = uniqid();
+            $this->load->view($page, $data);
+             break;
+           case 'add_assig_conductor_route':
+            $return = 'Not Saved.';
+            if ($this->input->server('REQUEST_METHOD')=='POST') { 
+                $edit_id =  $this->input->post('id');
+                if ($edit_id!=null) {
+                       $data = array(
+                       'route_id'     => $this->input->post('route'),
+                       'conductor_id'  => $this->input->post('conductor'),
+                       'created_by' => $_SESSION['MUserId'],
+                       'status'        =>1,
+                   );  
+                   if($this->erp_model->UpdateData('assgin_tr_route_conductor',$data,$edit_id)){
+                       $return = 'Updated.';
+                   }
+               }
+               else{ 
+                  
+                       $data = array(
+                        'route_id'     => $this->input->post('route'),
+                        'conductor_id'  => $this->input->post('conductor'),
+                           'created_by' => $_SESSION['MUserId'],
+                           'status'        =>1,
+                       );  
+                $count = $this->erp_model->Counter('assgin_tr_route_conductor', array('route_id' =>$this->input->post('route') ));
+                if($count==0){
+                   if ($this->erp_model->Insert('assgin_tr_route_conductor',$data)) {
+                       $return = 'Saved.';
+                       
+                   }
+                }else
+                {
+                    $return = 'Already Mapped.';
+                }
+               }
+           }
+           echo $return;
+           break; 
             default:
                 # code...
                 break;

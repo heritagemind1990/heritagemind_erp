@@ -9,7 +9,7 @@ if($this->session->MName=='' || $this->session->MLogin==false)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>School ERP | iGradePlus | </title>
+  <title><?=$title;?> | Heritage Mind | </title>
     <base href="<?php echo base_url();?>">
 
    <link rel="icon" type="image/x-icon" href="<?=base_url('assets/');?>photo/images/h.png">

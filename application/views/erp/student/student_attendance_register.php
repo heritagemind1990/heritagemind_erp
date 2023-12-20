@@ -59,7 +59,7 @@
               <div class="card-header">
               <h3 class="card-title float-right ml-2">
                  <button onclick="ExportToExcel('xlsx')" class="btn btn-success btn-sm mr-2">Export table to excel</button>
-                <a href="<?=base_url();?>teacher-data" class="btn btn-danger btn-sm"><i class="fas fa-backward"></i>   Back</a>
+                <a href="<?=base_url();?>student-dashboard" class="btn btn-danger btn-sm"><i class="fas fa-backward"></i>   Back</a>
                 </h3>
               </div>
               <!-- /.card-header -->
