@@ -379,7 +379,7 @@ public function get_deriver_route($route_id)
       ->select('t1.*,t1.id as assign_id,t2.*')
     ->from('assgin_tr_route_driver t1')
     ->join('transport_drivers t2','t2.id=t1.driver_id','left')
-    ->distinct('t3.route_id')
+    ->distinct('t1.route_id')
     ->where(['t1.is_deleted'=>'NOT_DELETED','t2.status'=>'1','t2.is_deleted'=>'NOT_DELETED','t1.route_id'=>$route_id]) ;
      
     return $this->db->get()->result();
@@ -390,7 +390,19 @@ public function get_conductor_route($route_id)
       ->select('t1.*,t1.id as assign_id,t2.*')
     ->from('assgin_tr_route_conductor t1')
     ->join('transport_conductors t2','t2.id=t1.conductor_id','left')
-    ->distinct('t3.route_id')
+    ->distinct('t1.route_id')
+    ->where(['t1.is_deleted'=>'NOT_DELETED','t2.status'=>'1','t2.is_deleted'=>'NOT_DELETED','t1.route_id'=>$route_id]) ;
+     
+    return $this->db->get()->result();
+}
+
+public function get_vehicle_route($route_id)
+{
+      $this->db
+      ->select('t1.*,t1.id as assign_id,t2.*')
+    ->from('assgin_tr_route_vehicle t1')
+    ->join('transport_vehicle t2','t2.id=t1.vehicle_id','left')
+    ->distinct('t1.route_id')
     ->where(['t1.is_deleted'=>'NOT_DELETED','t2.status'=>'1','t2.is_deleted'=>'NOT_DELETED','t1.route_id'=>$route_id]) ;
      
     return $this->db->get()->result();

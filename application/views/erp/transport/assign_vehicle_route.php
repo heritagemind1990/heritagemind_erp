@@ -4,25 +4,29 @@
   <thead>
     <th>Sr.No.</th>
     <th>Photo</th>
-    <th>Driver Name</th>
-    <th>Contact Number</th>
-    <th>Email</th>
-    <th>Address</th>
+    <th>Vehicle Name</th>
+    <th>Owner Name</th>
+    <th>Vehicle Number</th>
+    <th>Owner Mobile No</th>
+    <th>Registration No</th>
+    <th>Capacity</th>
     <th>Status</th>
     <th>Action</th>
   </thead>
   <tbody>
     <?php 
-     foreach($data as $d):   $id = $d->assign_id ; $driver_id = $d->driver_id?>
+     foreach($data as $d):   $id = $d->assign_id ; $vehicle_id = $d->vehicle_id?>
     <tr>
         <td>1.</td>
-        <td><img src="<?=IMGS_URL.$d->photo;?>" alt="" height="80px" onerror="this.src='<?=base_url()?>assets/noimg/logo.jpg';"></td>
-        <td><?=$d->name;?></td>
-        <td><?=$d->mobile;?></td>
-        <td><?=$d->email;?></td>
-        <td><?=$d->address;?></td>
+        <td><img src="<?=IMGS_URL.$d->vehicle_photo;?>" alt="" height="80px" onerror="this.src='<?=base_url()?>assets/noimg/logo.jpg';"></td>
+        <td><?=$d->vehicle_name;?></td>
+        <td><?=$d->owner_name;?></td>
+        <td><?=$d->vehicle_no;?></td>
+        <td><?=$d->owner_mobile_no;?></td>
+        <td><?=$d->vehicle_reg_no;?></td>
+        <td><?=$d->vehicle_child_capacity;?></td>
         <td class="text-center">
-         <span class="changeStatus" data-toggle="change-status" value="<?=($d->status==1) ? 0 : 1?>" data="<?=$d->id?>,assgin_tr_route_driver,id,status" ><i class="<?=($d->status==1) ? 'fa-regular fa-circle-check' : 'fa-solid fa-circle-xmark'?>" title="Click for chenage status" style="color:<?=($d->status==1) ? 'green' :'red'?> "></i></span>
+         <span class="changeStatus" data-toggle="change-status" value="<?=($d->status==1) ? 0 : 1?>" data="<?=$d->id?>,assgin_tr_route_vehicle,id,status" ><i class="<?=($d->status==1) ? 'fa-regular fa-circle-check' : 'fa-solid fa-circle-xmark'?>" title="Click for chenage status" style="color:<?=($d->status==1) ? 'green' :'red'?> "></i></span>
           </td>
         <td>
         <a href="javascript:void(0)" title="Update" id="edit_form_button">
@@ -39,11 +43,11 @@
     <input type="hidden" name="" id="route" value="<?=$route->id;?>">
     <input type="hidden" name="" id="id" value="">
     <div class="form-group">
-        <label for="">Select Driver</label>
-        <select name="driver" id="driver" class="form-control">
+        <label for="">Select Vehicle</label>
+        <select name="vehicle" id="vehicle" class="form-control">
             <option value="">--Select--</option>
-            <?php foreach($driver as $dr):?>
-             <option value="<?=$dr->id;?>"><?=$dr->name;?></option>
+            <?php foreach($vehicle as $dr):?>
+             <option value="<?=$dr->id;?>"><?=$dr->vehicle_name;?></option>
             <?php endforeach;?>
         </select>
     </div>
@@ -59,20 +63,20 @@
  <div class="row mt-4 pb-5" id="update-form" style="display: none;">
   <div class="col-10">
     <input type="hidden" name="" class="route" id="route" value="<?=$route->id;?>">
-    <input type="hidden" name="" class="id" id="id" value="<?=$id;?>">
+    <input type="hidden" name="" class="id"  value="<?=@$id;?>">
     <div class="form-group">
-        <label for="">Select Driver</label>
-        <select name="driver" id="driver" class="form-control driver">
+        <label for="">Select Vehicle</label>
+        <select name="vehicle" id="vehicle" class="form-control vehicle">
             <option value="">--Select--</option>
-            <?php foreach($driver as $dr):?>
-             <option value="<?=$dr->id;?>" <?php if($driver_id==$dr->id){echo "selected";} ;?> ><?=$dr->name;?></option>
+            <?php foreach($vehicle as $dr):?>
+             <option value="<?=$dr->id;?>" <?php if(@$vehicle_id==$dr->id){echo "selected";} ;?> ><?=$dr->vehicle_name;?></option>
             <?php endforeach;?>
         </select>
     </div>
   </div>
   <div class="col-2">
     <div class="form-group">
-        <button class="btn btn-danger mt-4 updatebtn" style="display: none;"  onclick="update_driver()"  type="button">Update</button>
+        <button class="btn btn-danger updatebtn mt-4" onclick="update_driver()"  style="display: none;" type="button">Update</button>
     </div>
   </div>
  </div>
@@ -89,15 +93,15 @@
 function add_driver()
 {
     var route = $('#route').val();
-    var driver = $('#driver').val();
+    var vehicle = $('#vehicle').val();
     var id = $('#id').val();
-    if(driver !=''){
+    if(vehicle !=''){
    $.ajax({
-    url: "<?php echo base_url('route-allocation/add_assig_driver_route'); ?>",
+    url: "<?php echo base_url('route-allocation/add_assig_vehicle_route'); ?>",
     method: "POST",
     data: {
         route:route,
-        driver:driver,
+        vehicle:vehicle,
         id:id
     },
     success: function(data){
@@ -121,21 +125,21 @@ function add_driver()
 });
     }else
     {
-        alert_toastr("error","Please select driver");
+        alert_toastr("error","Please select conductor");
     }
 }
 function update_driver()
 {
     var route = $('.route').val();
-    var driver = $('.driver').val();
+    var vehicle = $('.vehicle').val();
     var id = $('.id').val();
-    if(driver !=''){
+    if(vehicle !=''){
    $.ajax({
-    url: "<?php echo base_url('route-allocation/add_assig_driver_route'); ?>",
+    url: "<?php echo base_url('route-allocation/add_assig_vehicle_route'); ?>",
     method: "POST",
     data: {
         route:route,
-        driver:driver,
+        vehicle:vehicle,
         id:id
     },
     success: function(data){
@@ -159,7 +163,7 @@ function update_driver()
 });
     }else
     {
-        alert_toastr("error","Please select driver");
+        alert_toastr("error","Please select conductor");
     }
 }
 </script>

@@ -1318,6 +1318,52 @@ class Transport extends Inst {
            }
            echo $return;
            break; 
+        //    assign vehicle
+        case 'assign-vehicle-route':
+            $page                       = 'erp/transport/assign_vehicle_route';
+            $data['route']               = $this->transport_model->view_data_id('transport_route',$p1);
+            $data['data']             = $this->transport_model->get_vehicle_route($p1);
+            $data['vehicle']            =$this->transport_model->view_data('transport_vehicle');
+            $data['form_id']            = uniqid();
+            $this->load->view($page, $data);
+             break;
+           case 'add_assig_vehicle_route':
+            $return = 'Not Saved.';
+            if ($this->input->server('REQUEST_METHOD')=='POST') { 
+                $edit_id =  $this->input->post('id');
+                if ($edit_id!=null) {
+                       $data = array(
+                       'route_id'     => $this->input->post('route'),
+                       'vehicle_id'  => $this->input->post('vehicle'),
+                       'created_by' => $_SESSION['MUserId'],
+                       'status'        =>1,
+                   );  
+                   if($this->erp_model->UpdateData('assgin_tr_route_vehicle',$data,$edit_id)){
+                       $return = 'Updated.';
+                   }
+               }
+               else{ 
+                  
+                       $data = array(
+                        'route_id'     => $this->input->post('route'),
+                        'vehicle_id'  => $this->input->post('vehicle'),
+                           'created_by' => $_SESSION['MUserId'],
+                           'status'        =>1,
+                       );  
+                $count = $this->erp_model->Counter('assgin_tr_route_vehicle', array('route_id' =>$this->input->post('route') ));
+                if($count==0){
+                   if ($this->erp_model->Insert('assgin_tr_route_vehicle',$data)) {
+                       $return = 'Saved.';
+                       
+                   }
+                }else
+                {
+                    $return = 'Already Mapped.';
+                }
+               }
+           }
+           echo $return;
+           break; 
             default:
                 # code...
                 break;
