@@ -413,11 +413,17 @@ public function getTotalExam()
 
 public function getStudentTransport($student)
 {
-     $this->db->select("t2.fname,t2.lname,t2.section_name,t2.class_name,t3.start_route,t3.end_route,t4.pick_up,t4.drop_off,t4.pick_up_time,t4.stop_time");
+     $this->db->select("t2.fname,t2.lname,t2.section_name,t2.class_name,t2.self_img,t2.address,t3.start_route,t3.end_route,t4.pick_up,t4.drop_off,t4.pick_up_time,t4.stop_time,t6.name as driver_name,t6.mobile as driver_mobile,t6.photo as driver_photo,t6.address as driver_address,t8.name as conductor_name,t8.mobile as conductor_mobile,t8.photo as conductor_photo,t8.address as conductor_address,t10.vehicle_no,t10.vehicle_name,t10.vehicle_photo,t10.vehicle_child_capacity");
      $this->db->from('transport_student t1');
      $this->db->join('v_sec_student t2','t1.student_id=t2.id','left');
      $this->db->join('transport_route t3','t1.route_id=t3.id','left');
      $this->db->join('transport_sub_route t4','t1.sub_route_id=t4.id','left');
+     $this->db->join('assgin_tr_route_driver t5','t5.route_id=t1.route_id','left');
+     $this->db->join('transport_drivers t6','t6.id=t5.driver_id','left');
+     $this->db->join('assgin_tr_route_conductor t7','t7.route_id=t1.route_id','left');
+     $this->db->join('transport_conductors t8','t8.id=t7.conductor_id','left');
+     $this->db->join('assgin_tr_route_vehicle t9','t9.route_id=t1.route_id','left');
+     $this->db->join('transport_vehicle t10','t10.id=t9.vehicle_id','left');
      $this->db->where(['t1.is_deleted'=>'NOT_DELETED','t1.status'=>'1','t1.student_id'=>$student,'t2.regstatus'=>'1','t2.IsLeft'=>'0']);
     
      return $this->db->get()->row();

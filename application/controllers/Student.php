@@ -470,7 +470,7 @@ public function Logout()
        $data['title']          = 'My Transport Stoppage & Timing';
        $data['tb_url']            = current_url().'/tb';
        $data['search']           = $this->input->post('search');
-       $data['exam']           = $this->student_model->getStudentTransport($id);
+       $data['student']           = $this->student_model->getStudentTransport($id);
        $this->load->view('erp/student/header',$data);
        $this->load->view('erp/student/student_transport_stoppage',$data);
        $this->load->view('erp/student/footer');
