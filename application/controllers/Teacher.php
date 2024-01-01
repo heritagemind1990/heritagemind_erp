@@ -1207,7 +1207,63 @@ class Teacher extends CI_Controller {
 
         return $distance;
     }
-
-
+    public function teacher_student_leave_request($action=null,$p1=null,$p2=null,$p3=null)
+    {
+        switch ($action) {
+        case null:
+        $data['menu_id'] = $this->uri->segment(2);
+        $id=$_SESSION['MUserId'];
+        $data['roles'] = $this->erp_model->view_role($id);
+        $data['title']          = 'Student Leave Request';
+        $data['tb_url']            = current_url().'/tb';
+        $data['search']           = $this->input->post('search');
+        $this->load->view('erp/teacher/header',$data);
+        $this->load->view('erp/teacher/student_leave_request',$data);
+        $this->load->view('erp/teacher/footer');
+        break;
+        case 'tb':
+            $userid=$id=$_SESSION['MUserId'];
+            $this->load->library('pagination');
+            $config = array();
+            $config["base_url"]     = base_url()."teacher-student-marks-upload/tb";
+            $config["total_rows"]   = count($this->teacher_model->getStudentLeave());
+            $data['total_rows']     = $config["total_rows"];
+            $config["per_page"]     = 10;
+            $config["uri_segment"]  = 2;
+            $config['attributes']   = array('class' => 'pag-link ');
+            $this->pagination->initialize($config);
+            $data['links']          = $this->pagination->create_links();
+            $data['page']           = $page = ($p1!=null) ? $p1 : 0;
+            $data['search']         = $this->input->post('search');
+            $data['action_url']         = base_url().'teacher-student-leave-request/save';
+            $data['rows']           = $this->teacher_model->getStudentLeave($config["per_page"],$page);
+            $page                       = 'erp/teacher/tb_student_leave';
+            $this->load->view($page, $data); 
+            break;
+            case 'save':
+             $return['res'] = 'error';
+             $return['msg'] = 'Not Saved!';
+             if ($this->input->server('REQUEST_METHOD')=='POST') { 
+             $leave_id=$this->input->post('reason');
+             $id=$_SESSION['MUserId'];
+             $data = array(
+                 'approval_status'     => $this->input->post('status'),
+                 'approved_remark'     => $this->input->post('remark'),
+                 'approved_by'     => $id,
+              );
+              if ($this->erp_model->Update('student_leave',$data,['id'=>$leave_id])) {
+             $return['res'] = 'success';
+              $return['msg'] = 'Status changed.';
+              }
+            }
+            echo json_encode($return);
+          break;
+         default:
+        # code...
+        break;
+        }
+    } 
+    
+    
 
 }

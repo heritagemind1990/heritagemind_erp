@@ -207,6 +207,19 @@
           </a>
             <!-- /.info-box -->
           </div>
+          <div class="col-md-3 col-sm-6 col-12">
+          <a href="<?=base_url();?>teacher-student-leave-request">
+            <div class="info-box">
+              <span class="info-box-icon bg-warning"><i class="fa-solid fa-person-booth"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text text-bold">student Leave Request</span>
+                <span class="info-box-text subheading" >Total Student :- <?//=$total_student;?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            </a>
+            <!-- /.info-box -->
+          </div>
         </div>
       </div><!-- /.container-fluid -->
 

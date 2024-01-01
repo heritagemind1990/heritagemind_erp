@@ -252,10 +252,26 @@ if($this->session->MName=='' || $this->session->MLogin==false)
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?=base_url();?>left-student" class="nav-link">
-            <i class="fa-solid fa-left-long"></i>
+            <a href="<?=base_url();?>my-attendance" class="nav-link">
+            <i class="fa-regular fa-calendar-days"></i>
               <p>
-                Left Student
+              My Attendance
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?=base_url();?>student-transport-stoppage" class="nav-link">
+            <i class="fa-solid fa-bus"></i>
+              <p>
+              My Transport Stoppage
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?=base_url();?>student-leave-request" class="nav-link">
+            <i class="fa-solid fa-person-booth"></i>
+              <p>
+              My Leave Request
               </p>
             </a>
           </li>

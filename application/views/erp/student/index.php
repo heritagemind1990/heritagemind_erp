@@ -164,10 +164,9 @@
 <div class="container-fluid">
         <div class="row">
           <div class="col-md-3 col-sm-6 col-12">
-          <a href="<?=base_url();?>student-document-master">
+          <a href="<?=base_url();?>student-leave-request">
             <div class="info-box">
-              <span class="info-box-icon bg-info"><i class="fas fa-user-graduate"></i></span>
-
+              <span class="info-box-icon bg-warning"><i class="fa-solid fa-person-booth"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text text-bold">My Leave Request</span>
                 <span class="info-box-text subheading" >Total Student :- <?//=$total_student;?></span>

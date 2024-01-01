@@ -534,6 +534,34 @@ public function getAttMaster($school)
     ->get();
     return $query->row();
 }
+public function getStudentLeave($limit=null,$start=null)
+{
+    if ($limit!=null) {
+        $this->db->limit($limit, $start);
+    }
+    $this->db
+    ->select("t1.*,t2.fname,t2.lname,t2.stu_id,t2.class_name,t2.section_name,t2.address,t2.father,t2.father_no,t3.name as teacher_name")
+    ->from('student_leave t1')
+    ->join('v_sec_student t2','t1.student_id=t2.id','left')
+    ->join('teacher_master t3','t3.id=t1.approved_by','left')
+    ->where(['t1.is_deleted'=>'NOT_DELETED','t2.regstatus'=>'1','t2.IsLeft'=>'0'])
+    ->order_by('t2.fname');             
+    if (@$_POST['search']) {
+        $data['search'] = $_POST['search'];
+        $this->db->group_start();
+        $this->db->like('t2.fname',$_POST['search']);
+        $this->db->like('t2.lname',$_POST['search']);
+        $this->db->or_like('t2.stu_id',$_POST['search']);
+        $this->db->or_like('t2.enrollment',$_POST['search']);
+        $this->db->or_like('t2.father_no',$_POST['search']);
+        $this->db->group_end();
+    }
+    if($limit!=null)
+        return $this->db->get()->result();
+    else
+    return $this->db->get()->result();
+}
+
 
 
 

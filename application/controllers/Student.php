@@ -482,4 +482,59 @@ public function Logout()
        }
    }
 
+   public function student_leave_request($action=null,$p1=null,$p2=null,$p3=null)
+   {
+       switch ($action) {
+       case null:
+       $data['menu_id'] = $this->uri->segment(2);
+       $id=$_SESSION['MUserId'];
+       $data['roles'] = $this->erp_model->view_role($id);
+       $data['title']          = 'My Leave Request';
+       $data['tb_url']            = current_url().'/tb';
+       $data['search']           = $this->input->post('search');
+       $data['student']         = $this->student_model->get_student_row($id);
+       $data['leave']           = $this->student_model->getStuLeave($id);
+       $data['new_url']            = current_url().'/create';
+       $this->load->view('erp/student/header',$data);
+       $this->load->view('erp/student/student_leave_request',$data);
+       $this->load->view('erp/student/footer');
+       break;
+       case 'create':
+        $data['action_url']         = base_url().'student-leave-request/save/'.$p1;
+        $page           = 'erp/student/apply_leave';
+        $data['form_id']            = uniqid();
+        $this->load->view($page, $data);
+        break;
+        case 'save':
+            $return['res'] = 'error';
+            $return['msg'] = 'Not Saved!';
+            if ($this->input->server('REQUEST_METHOD')=='POST') { 
+            $id=$_SESSION['MUserId'];
+            $data = array(
+                'student_id'     => $id,
+                'reason'     => $this->input->post('reason'),
+                'created_by' =>$id,
+                'leave_date' =>$this->input->post('date'),
+             );
+             $count = $this->erp_model->Counter('student_leave', array('student_id'=>$id,'leave_date'=>$this->input->post('date'),'is_deleted'=>'NOT_DELETED'));
+            if($count==0){
+             if ($this->erp_model->Save('student_leave',$data)) {
+            $return['res'] = 'success';
+             $return['msg'] = 'Successfully applied.';
+             }
+            }else
+            {
+                $return['res'] = 'error';
+                $return['msg'] = 'Today you are already applied leave.';
+            }
+           }
+           echo json_encode($return);
+         break;
+        default:
+       # code...
+       break;
+       }
+   } 
+   
+
 }   

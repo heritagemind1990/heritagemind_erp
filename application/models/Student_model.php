@@ -428,6 +428,15 @@ public function getStudentTransport($student)
     
      return $this->db->get()->row();
 } 
+public function getStuLeave($student)
+{
+     $this->db->select("t1.*");
+     $this->db->from('student_leave t1');
+     $this->db->join('v_sec_student t2','t1.student_id=t2.id','left');
+     $this->db->where(['t1.is_deleted'=>'NOT_DELETED','t1.student_id'=>$student,'t2.regstatus'=>'1','t2.IsLeft'=>'0']);
+    
+     return $this->db->get()->result();
+} 
 
 
 }

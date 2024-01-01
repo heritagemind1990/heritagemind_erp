@@ -308,6 +308,14 @@ if($this->session->MName=='' || $this->session->MLogin==false)
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?=base_url();?>teacher-student-leave-request" class="nav-link">
+            <i class="fa-solid fa-person-booth"></i>
+              <p>
+              Student Leave Request
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

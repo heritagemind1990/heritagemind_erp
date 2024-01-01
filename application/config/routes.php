@@ -824,3 +824,13 @@ $route['my-marks/(:any)/(:any)'] = 'student/my_marks/$1/$2';
 $route['student-transport-stoppage'] = 'student/student_transport_stoppage';
 $route['student-transport-stoppage/(:any)'] = 'student/student_transport_stoppage/$1';
 $route['student-transport-stoppage/(:any)/(:any)'] = 'student/student_transport_stoppage/$1/$2';
+
+//student-leave-request
+$route['student-leave-request'] = 'student/student_leave_request';
+$route['student-leave-request/(:any)'] = 'student/student_leave_request/$1';
+$route['student-leave-request/(:any)/(:any)'] = 'student/student_leave_request/$1/$2';
+
+//teacher-student-leave-request
+$route['teacher-student-leave-request'] = 'teacher/teacher_student_leave_request';
+$route['teacher-student-leave-request/(:any)'] = 'teacher/teacher_student_leave_request/$1';
+$route['teacher-student-leave-request/(:any)/(:any)'] = 'teacher/teacher_student_leave_request/$1/$2';
